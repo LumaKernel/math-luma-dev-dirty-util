@@ -39,7 +39,7 @@ const plugin: Plugin<PluginParameters, Root> = function (
   };
 };
 
-export const processCodeHtml = async (s: string) => {
+export const processCodeHtml = async (s: string): Promise<string> => {
   const classProp = "class__" + createRandomId(4);
   const lbraceEscape = "lbrace__" + createRandomId(4);
   const proc = unified().use(rehypeParse, {
