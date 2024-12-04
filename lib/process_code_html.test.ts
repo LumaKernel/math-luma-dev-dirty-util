@@ -8,15 +8,19 @@ Deno.test(
       await processCodeHtml(
         '<span class="foo bar">hi</span><span class="hello">{</span>',
       ),
-      '<span><Span className="foo bar">hi</Span><Span className="hello">&#123;</Span></span>',
+      '<Wrapper><Span className="foo bar">hi</Span><Span className="hello">&#123;</Span></Wrapper>',
     );
     assertEquals(
       await processCodeHtml('<span className="className">foo&#123;</span>'),
-      '<span><Span className="className">foo&#123;</Span></span>',
+      '<Wrapper><Span className="className">foo&#123;</Span></Wrapper>',
     );
     assertEquals(
       await processCodeHtml("<span>yo</span>"),
-      "<span><Span>yo</Span></span>",
+      "<Wrapper><Span>yo</Span></Wrapper>",
+    );
+    assertEquals(
+      await processCodeHtml("<span>yo\nhello</span>\n"),
+      "<Wrapper><Span>yo<NewLine />hello</Span><NewLine /></Wrapper>",
     );
   },
 );
