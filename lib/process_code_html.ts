@@ -20,8 +20,8 @@ type PluginParameter = Readonly<{
 type PluginParameters = [PluginParameter];
 
 const textEscapes = [
-  {char: '{', name: 'lbrace', to: '&#123;'},
-  {char: '\n', name: 'lf', to: '<NewLine />'},
+  { char: "{", name: "lbrace", to: "&#123;" },
+  { char: "\n", name: "lf", to: "<NewLine />" },
 ];
 
 const plugin: Plugin<PluginParameters, Root> = function (
@@ -38,8 +38,8 @@ const plugin: Plugin<PluginParameters, Root> = function (
         }
       }
       if (node.type === "text") {
-        for (const {char, name} of textEscapes) {
-          node.value = node.value.replaceAll(char, textEscape + '-' + name);
+        for (const { char, name } of textEscapes) {
+          node.value = node.value.replaceAll(char, textEscape + "-" + name);
         }
       }
     });
@@ -55,10 +55,10 @@ export const processCodeHtml = async (s: string): Promise<string> => {
     .use(plugin, { classProp, textEscape })
     .use(rehypeStringify);
   const file = await proc.process(s);
-  let r = file.toString()
-  r = r.replaceAll(classProp, "className")
-  for (const {to, name} of textEscapes) {
-    r = r.replaceAll(textEscape + '-' + name, to);
+  let r = file.toString();
+  r = r.replaceAll(classProp, "className");
+  for (const { to, name } of textEscapes) {
+    r = r.replaceAll(textEscape + "-" + name, to);
   }
   return "<Wrapper>" + r + "</Wrapper>";
 };
